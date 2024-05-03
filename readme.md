@@ -1,14 +1,14 @@
 # Essentials
 
+##Enclosed Tuple
 
+###Usage
 
-TBD...
+sb = New StringBuilder().AppendToEnclosedTuple("Foo").AppendToEnclosedTuple("Bar").AppendToEnclosedTuple("Mambo#5")
 
+"#Foo#Bar#Mambo\#\5"
 
-
-
-
-
+Dim tupleElements As String() = "#Foo#Bar#Mambo\#\5".SplitEnclosedTuple()
 
 https://github.com/SmartStandards/Essentials
 
