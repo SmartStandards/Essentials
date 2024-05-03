@@ -9,8 +9,9 @@
     <Import_RootNamespace>System</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)System\SmartStandards\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Snowflake44.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\%28GIT%29\SmartStandards\Essentials\dotnet\src\Essentials\System\SmartStandards\EnclosedTupleExtensions.cs" />
   </ItemGroup>
 </Project>

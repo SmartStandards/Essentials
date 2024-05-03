@@ -8,9 +8,7 @@ This files contains a version history including all changes relevant for semanti
 
 ## Upcoming Changes
 
-*(none)*
-
-
+- New Feature: EnclosedTupleExtensions
 
 ## v 0.1.14
 released **2024-04-04**, including:
