@@ -246,8 +246,7 @@ namespace System.SmartStandards {
           elementIndex += 1;
           nulled = false;
 
-          if (onEachElementMethod != null)
-            elementBuilder = new StringBuilder(80);
+          if (onEachElementMethod != null) elementBuilder = new StringBuilder(80);
 
         } else {
           elementBuilder?.Append(peek);

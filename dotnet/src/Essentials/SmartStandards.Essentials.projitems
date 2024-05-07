@@ -12,6 +12,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)System\SmartStandards\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\%28GIT%29\SmartStandards\Essentials\dotnet\src\Essentials\System\SmartStandards\EnclosedTupleExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\SmartStandards\EnclosedTupleExtensions.cs" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4130D21C-FE8F-4925-93E7-217B4AF1B7D9}"
 	ProjectSection(SolutionItems) = preProject
 		..\vers\changelog.md = ..\vers\changelog.md
-		..\readme.md = ..\readme.md
+		..\README.md = ..\README.md
 		SmartStandards.Essentials.nuspec = SmartStandards.Essentials.nuspec
 	EndProjectSection
 EndProject
@@ -15,12 +15,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C5272353-539E-4138-93FD-9DF437F6DA47}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SmartStandards.Essentials", "src\Essentials\SmartStandards.Essentials.shproj", "{CF0A161A-99BA-4F01-AF5E-16C6FCBC85AE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{431B90E9-4591-4FBD-A87F-52866A67B36D}"
-	ProjectSection(SolutionItems) = preProject
-		..\js\package.json = ..\js\package.json
-		..\js\src\snowflake44.ts = ..\js\src\snowflake44.ts
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartStandards.Essentials.net6.0", "src\Essentials.net6.0\SmartStandards.Essentials.net6.0.csproj", "{7B5BAEA8-7E79-4A30-B6C1-4DA4831AF970}"
 EndProject
@@ -54,7 +48,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CF0A161A-99BA-4F01-AF5E-16C6FCBC85AE} = {EFB5135D-039A-4D92-8FDD-9EA5D070F991}
-		{431B90E9-4591-4FBD-A87F-52866A67B36D} = {4130D21C-FE8F-4925-93E7-217B4AF1B7D9}
 		{7B5BAEA8-7E79-4A30-B6C1-4DA4831AF970} = {911E9786-3347-476A-89D8-6AB7EA3D6320}
 		{B0BA06FE-6437-4B9E-8C76-3ADFC8D191D2} = {911E9786-3347-476A-89D8-6AB7EA3D6320}
 		{911E9786-3347-476A-89D8-6AB7EA3D6320} = {EFB5135D-039A-4D92-8FDD-9EA5D070F991}
