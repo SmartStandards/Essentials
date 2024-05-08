@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.2.0",
-  "currentVersionWithSuffix": "0.2.0",
+  "currentVersion": "0.3.0",
+  "currentVersionWithSuffix": "0.3.0",
   "releaseType": "official",
-  "previousVersion": "0.1.15",
+  "previousVersion": "0.2.0",
   "changeGrade": "minor",
   "currentMajor": 0,
-  "currentMinor": 2,
+  "currentMinor": 3,
   "currentPatch": 0,
   "versionDateInfo": "2024-05-08",
-  "versionTimeInfo": "13:58:19",
-  "versionNotes": "- New Feature: EnclosedTupleExtensions\n"
+  "versionTimeInfo": "15:18:43",
+  "versionNotes": "- New Feature: ToEnclosedTuple() Extension for string[]\n"
 }

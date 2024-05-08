@@ -7,7 +7,15 @@ This files contains a version history including all changes relevant for semanti
 
 
 ## Upcoming Changes
-- New Feature: ToEnclosedTuple() Extension for string[]
+
+*(none)*
+
+
+
+## v 0.3.0
+released **2024-05-08**, including:
+ - New Feature: ToEnclosedTuple() Extension for string[]
+
 
 
 ## v 0.2.0
