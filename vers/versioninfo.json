@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.1.15",
-  "currentVersionWithSuffix": "0.1.15",
+  "currentVersion": "0.2.0",
+  "currentVersionWithSuffix": "0.2.0",
   "releaseType": "official",
-  "previousVersion": "0.1.14",
-  "changeGrade": "patch",
+  "previousVersion": "0.1.15",
+  "changeGrade": "minor",
   "currentMajor": 0,
-  "currentMinor": 1,
-  "currentPatch": 15,
-  "versionDateInfo": "2024-05-03",
-  "versionTimeInfo": "14:30:35",
-  "versionNotes": "- new revision without significant changes\n"
+  "currentMinor": 2,
+  "currentPatch": 0,
+  "versionDateInfo": "2024-05-08",
+  "versionTimeInfo": "13:58:19",
+  "versionNotes": "- New Feature: EnclosedTupleExtensions\n"
 }
