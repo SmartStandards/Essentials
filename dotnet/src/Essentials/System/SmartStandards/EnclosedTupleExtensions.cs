@@ -152,6 +152,36 @@ namespace System.SmartStandards {
       return extendee;
     }
 
+    /// <summary>
+    ///   Renders an enclosed tuple representation from the given array.
+    /// </summary>
+    /// <param name="allowNull"> Default = false. True => Returns the nullRepresentation, if the array is null (false => Throw an exception) </param>
+    /// <param name="nullRepresentation"> Default = "\0" </param>
+    /// <returns>
+    ///   null => exception or "\0"
+    ///   {} => ""
+    ///   {""} => "##"
+    ///   {null} => "#\0#"
+    ///   {"Foo"} => "#Foo#"
+    ///   {"Foo","Bar"} => "#Foo#Bar#"
+    ///   {"Fo#o","Ba\r"} => "#Fo\#o#Ba\\r#"
+    /// </returns>
+    public static String ToEnclosedTuple(this String[] extendee, bool allowNull = false, string nullRepresentation = "\0") {
+
+      if (extendee == null) {
+        if (!allowNull) throw new ArgumentNullException(nameof(extendee));
+        return nullRepresentation;
+      }
+
+      StringBuilder enclosedTupleBuilder = new StringBuilder(250);
+
+      foreach (string i in extendee) {
+        enclosedTupleBuilder.AppendToEnclosedTuple(i);
+      }
+
+      return enclosedTupleBuilder.ToString();
+    }
+
     public static bool TupleReflectsNull(this string extendee, char escapeChar = '\\') {
 
       if (extendee is null) return false;
