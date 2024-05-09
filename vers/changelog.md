@@ -8,8 +8,7 @@ This files contains a version history including all changes relevant for semanti
 
 ## Upcoming Changes
 
-*(none)*
-
+- New Feature: ArgsResolvingExtensions
 
 
 ## v 0.3.0

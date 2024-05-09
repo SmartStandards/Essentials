@@ -141,6 +141,16 @@ namespace System.SmartStandards {
       Assert.AreEqual(@"B\atz#", bEscapedMalformed[2]);
 
     }
+    
+    [TestMethod()]
+    public void ToEnclosedTuple_VariousTestPatterns_CreateExpectedResults() {
+      
+      String[] stringArray;
+      
+      stringArray = new String[] { "First", "Mambo#Five" };      
+      Assert.AreEqual(@"#First#Mambo\#\Five#", stringArray.ToEnclosedTuple());
+
+    }
 
     [TestMethod()]
     public void ForEachEnclosedTupleElement_OnlyCounting_CreateExpectedCounts() {
