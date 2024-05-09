@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.3.0",
-  "currentVersionWithSuffix": "0.3.0",
+  "currentVersion": "0.4.0",
+  "currentVersionWithSuffix": "0.4.0",
   "releaseType": "official",
-  "previousVersion": "0.2.0",
+  "previousVersion": "0.3.0",
   "changeGrade": "minor",
   "currentMajor": 0,
-  "currentMinor": 3,
+  "currentMinor": 4,
   "currentPatch": 0,
-  "versionDateInfo": "2024-05-08",
-  "versionTimeInfo": "15:18:43",
-  "versionNotes": "- New Feature: ToEnclosedTuple() Extension for string[]\n"
+  "versionDateInfo": "2024-05-09",
+  "versionTimeInfo": "10:06:56",
+  "versionNotes": "- New Feature: ArgsResolvingExtensions\n"
 }
