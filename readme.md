@@ -7,21 +7,14 @@ The **Essentials** package implements a convenience library for small (bottom up
 
 ## Content Overview
 
-|Component    |Description                                                                  |
-|-------------|-----------------------------------------------------------------------------|
-|ArgsResolver |Resolve named placeholders like `"Hello {audience}, the answer is {answer}."`|
-|EnclosedTuple|Manage string tuples like `"#Foo#Bar#Batz#"`                                 |
+|Component              |Description                                                                  |
+|-----------------------|-----------------------------------------------------------------------------|
+|EnclosedTupleExtensions|Manage string tuples like `"#Foo#Bar#Batz#"`                                 |
+|PlaceholderExtensions  |Resolve named placeholders like `"Hello {audience}, the answer is {answer}."`|
 
 # Get Started
 
 For dotnet, install the **SmartStandards Essentials Nuget Package**.
-
-## ArgsResolver Example
-
-    string template = "Hello {audience}, the answer is {answer}.";
-    object[] args = new object[] { "World", 42 };
-
-    template.TryResolveArgs(args); // Creates "Hello World, the answer is 42."
 
 ## EnclosedTuple Example
 
@@ -33,7 +26,14 @@ For dotnet, install the **SmartStandards Essentials Nuget Package**.
 
     stringArray = tuple.SplitEnclosedTuple(); // Creates String[] { "Hello", "World" } 
 
-# ArgsResolver
+## Placeholder Example
+
+    string template = "Hello {audience}, the answer is {answer}.";
+    object[] args = new object[] { "World", 42 };
+
+    template.ResolvePlaceholders(args); // Creates "Hello World, the answer is 42."
+
+# PlaceholderExtensions
 
 Having named placeholders (instead of indexed like "Hello {0}, the answer is {1}.") is a standard used by most logging frameworks.
 Unfortunately there is no .net built in support for resolving templates like that.

@@ -1,16 +1,13 @@
 # Change log
+
 This files contains a version history including all changes relevant for semantic versioning...
 
 *(it is automatically maintained using the ['KornSW-VersioningUtil'](https://github.com/KornSW/VersioningUtil))*
 
-
-
-
 ## Upcoming Changes
 
-*(none)*
-
-
+ - Breaking Change: Removed ArgsResolver
+ - New Feature: PlaceholderExtensions
 
 ## v 0.4.0
 released **2024-05-09**, including:

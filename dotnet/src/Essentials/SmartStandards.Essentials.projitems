@@ -9,7 +9,7 @@
     <Import_RootNamespace>System</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)System\SmartStandards\ArgsResolvingExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\SmartStandards\PlaceholderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\SmartStandards\EnclosedTupleExtensions.cs" />
   </ItemGroup>
 </Project>
