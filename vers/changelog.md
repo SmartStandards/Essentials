@@ -6,8 +6,16 @@ This files contains a version history including all changes relevant for semanti
 
 ## Upcoming Changes
 
+*(none)*
+
+
+
+## v 0.5.0
+released **2024-05-22**, including:
  - Breaking Change: Removed ArgsResolver
  - New Feature: PlaceholderExtensions
+
+
 
 ## v 0.4.0
 released **2024-05-09**, including:

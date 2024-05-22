@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.4.0",
-  "currentVersionWithSuffix": "0.4.0",
+  "currentVersion": "0.5.0",
+  "currentVersionWithSuffix": "0.5.0",
   "releaseType": "official",
-  "previousVersion": "0.3.0",
-  "changeGrade": "minor",
+  "previousVersion": "0.4.0",
+  "changeGrade": "major",
   "currentMajor": 0,
-  "currentMinor": 4,
+  "currentMinor": 5,
   "currentPatch": 0,
-  "versionDateInfo": "2024-05-09",
-  "versionTimeInfo": "10:06:56",
-  "versionNotes": "- New Feature: ArgsResolvingExtensions\n"
+  "versionDateInfo": "2024-05-22",
+  "versionTimeInfo": "09:51:46",
+  "versionNotes": "- Breaking Change: Removed ArgsResolver\n- New Feature: PlaceholderExtensions\n"
 }
