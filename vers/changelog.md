@@ -6,7 +6,7 @@ This files contains a version history including all changes relevant for semanti
 
 ## Upcoming Changes
 
-*(none)*
+- Internal Fix: 461 assembly version contained '*' which breaks the version stamper => '*' removed
 
 
 
