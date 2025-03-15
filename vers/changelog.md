@@ -10,6 +10,12 @@ This files contains a version history including all changes relevant for semanti
 
 
 
+## v 0.5.1
+released **2024-06-19**, including:
+ - Internal Fix: 461 assembly version contained '*' which breaks the version stamper => '*' removed
+
+
+
 ## v 0.5.0
 released **2024-05-22**, including:
  - Breaking Change: Removed ArgsResolver

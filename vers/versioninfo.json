@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.5.0",
-  "currentVersionWithSuffix": "0.5.0",
+  "currentVersion": "0.5.1",
+  "currentVersionWithSuffix": "0.5.1",
   "releaseType": "official",
-  "previousVersion": "0.4.0",
-  "changeGrade": "major",
+  "previousVersion": "0.5.0",
+  "changeGrade": "patch",
   "currentMajor": 0,
   "currentMinor": 5,
-  "currentPatch": 0,
-  "versionDateInfo": "2024-05-22",
-  "versionTimeInfo": "09:51:46",
-  "versionNotes": "- Breaking Change: Removed ArgsResolver\n- New Feature: PlaceholderExtensions\n"
+  "currentPatch": 1,
+  "versionDateInfo": "2024-06-19",
+  "versionTimeInfo": "11:32:51",
+  "versionNotes": "- Internal Fix: 461 assembly version contained '*' which breaks the version stamper => '*' removed\n"
 }
