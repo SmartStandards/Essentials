@@ -6,7 +6,13 @@ This files contains a version history including all changes relevant for semanti
 
 ## Upcoming Changes
 
-- None effective changes. Reformatted code.
+*(none)*
+
+
+
+## v 0.5.2
+released **2025-03-15**, including:
+ - None effective changes. Reformatted code.
 
 
 
