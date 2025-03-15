@@ -29,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{40B62F93-2DA
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStandards.Essentials.net480", "src\Essentials.net480\SmartStandards.Essentials.net480.csproj", "{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStandards.Essentials.net8.0", "src\Essentials.net8.0\SmartStandards.Essentials.net8.0.csproj", "{445AE90F-8EA8-4C93-81E6-B72A66B65737}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,14 @@ Global
 		{D0CD47CF-A4BE-408D-A621-0CD099CFB76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0CD47CF-A4BE-408D-A621-0CD099CFB76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0CD47CF-A4BE-408D-A621-0CD099CFB76F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,11 +69,15 @@ Global
 		{B0BA06FE-6437-4B9E-8C76-3ADFC8D191D2} = {911E9786-3347-476A-89D8-6AB7EA3D6320}
 		{911E9786-3347-476A-89D8-6AB7EA3D6320} = {EFB5135D-039A-4D92-8FDD-9EA5D070F991}
 		{D0CD47CF-A4BE-408D-A621-0CD099CFB76F} = {C5272353-539E-4138-93FD-9DF437F6DA47}
+		{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F} = {911E9786-3347-476A-89D8-6AB7EA3D6320}
+		{445AE90F-8EA8-4C93-81E6-B72A66B65737} = {911E9786-3347-476A-89D8-6AB7EA3D6320}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2F37C1D-32F0-4BF2-AAEB-46B9D8C07D23}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Essentials\SmartStandards.Essentials.projitems*{445ae90f-8ea8-4c93-81e6-b72a66b65737}*SharedItemsImports = 5
+		src\Essentials\SmartStandards.Essentials.projitems*{6a82f930-1c4c-4a6f-a132-0cd66e7dfd7f}*SharedItemsImports = 4
 		src\Essentials\SmartStandards.Essentials.projitems*{7b5baea8-7e79-4a30-b6c1-4da4831af970}*SharedItemsImports = 5
 		src\Essentials\SmartStandards.Essentials.projitems*{b0ba06fe-6437-4b9e-8c76-3adfc8d191d2}*SharedItemsImports = 4
 		src\Essentials\SmartStandards.Essentials.projitems*{cf0a161a-99ba-4f01-af5e-16c6fcbc85ae}*SharedItemsImports = 13

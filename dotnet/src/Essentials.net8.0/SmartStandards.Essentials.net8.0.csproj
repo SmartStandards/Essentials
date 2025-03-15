@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>System</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyName>SmartStandards.Essentials</AssemblyName>
+    <PackageId>SmartStandards.Essentials</PackageId>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>999.0.0</Version>
+    <Authors>SmartStandards</Authors>
+    <Company>(public domain)</Company>
+    <Product>SmartStandards.Essentials</Product>
+    <Description>SmartStandards.Essentials</Description>
+    <Copyright>SmartStandards</Copyright>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<OutputPath>..\..\dist\bin-net8.0\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DocumentationFile>..\..\dist\bin-net8.0\SmartStandards.Essentials.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <Import Project="..\Essentials\SmartStandards.Essentials.projitems" Label="Shared" />
+
+</Project>
