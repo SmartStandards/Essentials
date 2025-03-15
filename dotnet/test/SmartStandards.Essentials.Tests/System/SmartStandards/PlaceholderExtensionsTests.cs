@@ -28,9 +28,16 @@ namespace System.SmartStandards {
       // Missing values & malformed
 
       Assert.AreEqual("{Original} string.", "{Original} string.".ResolvePlaceholdersByPropertyBag(null));
-      Assert.AreEqual("Hello FooValue barValue {NotExisting} World.", "Hello {Foo} {Bar} {NotExisting} World.".ResolvePlaceholdersByPropertyBag(propertyBag1));
+     
+      Assert.AreEqual(
+        "Hello FooValue barValue {NotExisting} World.",
+        "Hello {Foo} {Bar} {NotExisting} World.".ResolvePlaceholdersByPropertyBag(propertyBag1)
+      );
+      
       Assert.AreEqual("{}", "{}".ResolvePlaceholdersByPropertyBag(propertyBag1));
+      
       Assert.AreEqual("{} FooValue", "{} {Foo}".ResolvePlaceholdersByPropertyBag(propertyBag1));
+      
       Assert.AreEqual("{Foo {bar}", "{Foo {bar}".ResolvePlaceholdersByPropertyBag(propertyBag1));
 
     }

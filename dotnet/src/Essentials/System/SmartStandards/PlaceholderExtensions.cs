@@ -28,12 +28,11 @@ namespace System.SmartStandards {
     /// <param name="omitPlaceholderNames">
     ///   Performance optimization. If true, the placeholder name is not extracted from the template.
     /// </param>
-    /// <remarks>
-    ///   v 0.1.0
-    /// </remarks>
     public static void ForEachPlaceholder(
       this string extendee,
-      Func<string, bool> onPlaceholderFound, Action<int, int> onRegularSegmentFound = null, bool omitPlaceholderNames = false
+      Func<string, bool> onPlaceholderFound, 
+      Action<int, int> onRegularSegmentFound = null, 
+      bool omitPlaceholderNames = false
     ) {
 
       if (extendee is null || extendee.Length < 3) return;
@@ -59,8 +58,8 @@ namespace System.SmartStandards {
         if (onPlaceholderFound.Invoke(placeholderName)) return;
 
         cursor = rightPos + 1;
-      }
-      while (cursor < extendee.Length);
+
+      } while (cursor < extendee.Length);
 
       onRegularSegmentFound?.Invoke(cursor, extendee.Length - cursor);
     }
@@ -80,9 +79,6 @@ namespace System.SmartStandards {
     ///   Null or a new string instance with resolved placeholders. The example would be resolved to:
     ///   "Hello World, the answer is 42."
     /// </returns>
-    /// <remarks>
-    ///   v 0.1.0
-    /// </remarks>
     public static string ResolvePlaceholders(this string extendee, params object[] args) {
 
       int maxIndex = args != null ? args.GetUpperBound(0) : -1;
@@ -91,21 +87,29 @@ namespace System.SmartStandards {
 
       int i = -1;
 
-      return extendee.ResolvePlaceholdersByCallback(
-        dummy => {
-          i++;
-          if (i <= maxIndex) {
-            return args[i]?.ToString();
-          } else {
-            return null;
-          } // Der Platzhalter wurd gar nicht gefunden => null
-        },
-        true
-      );
+      string onResolvePlaceholder(string dummyName) {
+        i++;
+        if (i <= maxIndex) {
+          return args[i]?.ToString();
+        } else {
+          return null;
+        }
+      }
+     
+      return extendee.ResolvePlaceholdersByCallback(onResolvePlaceholder, true);
     }
 
+    /// <summary>
+    ///   Resolves placeholders within a StringBuilder instance.
+    /// </summary>
+    /// <param name="extendee"> The StringBuilder instance containing unresolved placeholders. </param>
+    /// <param name="args"> Placeholder values in correct order. </param>
+    /// <returns> The StringBuilder instance after resolvingvar (to support fluent syntax). </returns>
     /// <remarks>
-    ///   v 0.1.0
+    ///   The internal behavior of this method is NOT equivalent to the same named string extension.
+    ///   Is is NOT performant to convert a string to a StringBuilder and pass it to this extension.
+    ///   Only use this extension if you have a StringBuilder instance anyways and you want to keep the instance.
+    ///   Otherwise using the string extension is faster.
     /// </remarks>
     public static StringBuilder ResolvePlaceholders(this StringBuilder extendee, params object[] args) {
 
@@ -145,42 +149,42 @@ namespace System.SmartStandards {
       return extendee;
     }
 
-    /// <remarks>
-    ///   v 0.1.0
-    /// </remarks>
     public static string ResolvePlaceholdersByDictionary(this string extendee, IDictionary<string, string> placeholders) {
 
       if (extendee is null || extendee.Length < 3 || placeholders is null || placeholders.Count == 0) {
         return extendee;
       }
 
-      return extendee.ResolvePlaceholdersByCallback(key => {
+      string onResolvePlaceholder(string placeholderName) {
         string value = null;
-        if (placeholders.TryGetValue(key, out value)) {
-          return value ?? ""; // Der Platzhalterwert is null => Leerstring
+        if (placeholders.TryGetValue(placeholderName, out value)) {
+          return value ?? ""; // Value is null => render empty string
         } else {
-          return null;
-        } // Der Platzhalter wurd gar nicht gefunden => null
-      });
-    }
-
-    /// <remarks>
-    ///   v 0.1.0
-    /// </remarks>
-    public static string ResolvePlaceholdersByPropertyBag(this string extendee, object propertyBag) {
-
-      if (extendee is null || extendee.Length < 3 || propertyBag is null) {
-        return extendee;
+          return null; // Value not existing => return null => leave placeholder unchanged
+        } 
       }
 
-      return extendee.ResolvePlaceholdersByCallback(key => {
-        var propertyInfo = propertyBag.GetType().GetProperty(key, BindingFlags.Public | BindingFlags.IgnoreCase | BindingFlags.Instance);
+      return extendee.ResolvePlaceholdersByCallback(onResolvePlaceholder);
+    }
+
+    public static string ResolvePlaceholdersByPropertyBag(this string extendee, object propertyBag) {
+
+      if (extendee is null || extendee.Length < 3 || propertyBag is null) return extendee;
+      
+      string onResolvePlaceholder(string placeholderName) {
+
+        PropertyInfo propertyInfo = propertyBag.GetType().GetProperty(
+          placeholderName, BindingFlags.Public | BindingFlags.IgnoreCase | BindingFlags.Instance
+        );
+        
         if (propertyInfo != null) {
-          return propertyInfo.GetValue(propertyBag).ToString() ?? ""; // Der Platzhalterwert is null => Leerstring
+          return propertyInfo.GetValue(propertyBag).ToString() ?? ""; // Property value is null => render empty string
         } else {
-          return null;
-        } // Der Platzhalter wurd gar nicht gefunden => null
-      });
+          return null; // Property not existing => return null => leave placeholder unchanged
+        }
+      }
+
+      return extendee.ResolvePlaceholdersByCallback(onResolvePlaceholder);
     }
 
     /// <summary>
@@ -192,29 +196,29 @@ namespace System.SmartStandards {
     ///   Will be called for each placeholder in order of appearance.
     ///   (e.g. "audience", "answer").
     ///   The placeholder name will be passed (or null, if omitPlaceholderNames is set).
-    ///   The resolved placeholder value should be returned. If null is returned, the template is left unchanged once, but the resolving is continued.
+    ///   The resolved placeholder value should be returned. 
+    ///   If null is returned, the placeholder will remain unchanged (including braces).
     ///   </param>
     /// <param name="omitPlaceholderNames">
     ///   Performance optimization. If true, the placeholder name is not extracted from the template.
     /// </param>
     /// <returns> The resolved string. </returns>
-    /// <remarks>
-    ///   v 0.1.0
-    /// </remarks>
     public static string ResolvePlaceholdersByCallback(
-      this string extendee, Func<string, string> onResolvePlaceholder, bool omitPlaceholderNames = false
+      this string extendee, 
+      Func<string, string> onResolvePlaceholder, 
+      bool omitPlaceholderNames = false
     ) {
 
-      if (extendee is null || extendee.Length < 3) return extendee;
+      if (extendee is null || extendee.Length < 3 || onResolvePlaceholder is null) return extendee;
 
-      var targetStringBuilder = new StringBuilder((int)Math.Round(extendee.Length * 1.5d));
+      StringBuilder targetStringBuilder = new StringBuilder(extendee.Length * 15 / 10);
 
       bool onPlaceholderFound(string placeholderName) {
         string value = onResolvePlaceholder.Invoke(placeholderName);
         if (value != null) {
           targetStringBuilder.Append(value);
         } else {
-          targetStringBuilder.Append("{").Append(placeholderName).Append("}");
+          targetStringBuilder.Append('{').Append(placeholderName).Append('}');
         }
         return false;
       }

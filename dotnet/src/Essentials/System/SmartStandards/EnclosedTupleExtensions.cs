@@ -5,7 +5,11 @@ namespace System.SmartStandards {
 
   public static class EnclosedTupleExtensions {
 
-    public static int IndexOfTupleElement(this string extendee, string value, char separator = '#', char escapeChar = '\\') {
+    public static int IndexOfTupleElement(
+      this string extendee, string value, 
+      char separator = '#', 
+      char escapeChar = '\\'
+    ) {
 
       if (extendee is null || string.IsNullOrEmpty(extendee)) return -1;
 
@@ -23,8 +27,8 @@ namespace System.SmartStandards {
       // "a#" and "#a" are malformed
       if ((extendee[0] != separator) || (extendee[extendee.Length - 1] != separator)) return -2;
 
-      var escaping = default(bool);
-      var anotherEscapeExpected = default(bool);
+      bool escaping = false;
+      bool anotherEscapeExpected = false;
       int cursor;
       char peek;
       int elementIndex = -1;
@@ -33,7 +37,8 @@ namespace System.SmartStandards {
       bool charAccepted;
       bool matchFound = true;
 
-      var loopTo = extendee.Length - 1;
+      int loopTo = extendee.Length - 1;
+
       for (cursor = 0; cursor <= loopTo; cursor++) {
 
         peek = extendee[cursor];
@@ -41,8 +46,7 @@ namespace System.SmartStandards {
 
         if (anotherEscapeExpected) {
           anotherEscapeExpected = false;
-          if (peek == escapeChar)
-            continue;
+          if (peek == escapeChar) continue;
           // Reaching this line of code means, the tuple is malformed (e.g. "#Backslash\#AfterHashtagIsMissing#")
           // But we are forgiving and treat the peek char regularily (value would be "Backslash#AfterHashtagIsMissing")
         }
@@ -123,7 +127,11 @@ namespace System.SmartStandards {
     ///   {"Foo","Bar"} => "#Foo#Bar#"
     ///   {"Fo#o","Ba\r"} => "#Fo\#o#Ba\\r#"
     /// </remarks>
-    public static StringBuilder AppendToEnclosedTuple(this StringBuilder extendee, string value, char separator = '#', char escapeChar = '\\') {
+    public static StringBuilder AppendToEnclosedTuple(
+      this StringBuilder extendee, string value, 
+      char separator = '#', 
+      char escapeChar = '\\'
+    ) {
 
       if (extendee is null) return null;
 
@@ -166,7 +174,11 @@ namespace System.SmartStandards {
     ///   {"Foo","Bar"} => "#Foo#Bar#"
     ///   {"Fo#o","Ba\r"} => "#Fo\#o#Ba\\r#"
     /// </returns>
-    public static String ToEnclosedTuple(this String[] extendee, bool allowNull = false, string nullRepresentation = "\0") {
+    public static String ToEnclosedTuple(
+      this String[] extendee, 
+      bool allowNull = false, 
+      string nullRepresentation = "\0"
+    ) {
 
       if (extendee == null) {
         if (!allowNull) throw new ArgumentNullException(nameof(extendee));
@@ -229,22 +241,22 @@ namespace System.SmartStandards {
 
       StringBuilder elementBuilder = null;
 
-      var escaping = default(bool);
-      var anotherEscapeExpected = default(bool);
-      var nulled = default(bool);
+      bool escaping = false;
+      bool anotherEscapeExpected = false;
+      bool nulled = false;
       int cursor;
       char peek;
       int elementIndex = -1;
 
-      var loopTo = extendee.Length - 1;
+      int loopTo = extendee.Length - 1;
+
       for (cursor = 0; cursor <= loopTo; cursor++) {
 
         peek = extendee[cursor];
 
         if (anotherEscapeExpected) {
           anotherEscapeExpected = false;
-          if (peek == escapeChar)
-            continue;
+          if (peek == escapeChar) continue;
           // Reaching this line of code means, the tuple is malformed (e.g. "#Backslash\#AfterHashtagIsMissing#")
           // But we are forgiving and treat the peek char regularily (value would be "Backslash#AfterHashtagIsMissing")
         }
@@ -305,17 +317,14 @@ namespace System.SmartStandards {
     /// </remarks>
     public static string[] SplitEnclosedTuple(this string extendee, char separator = '#', char escapeChar = '\\') {
 
-      if (extendee is null)
-        return null;
+      if (extendee is null) return null;
 
       // "\0" represents a container being null itself
-      if (extendee.Length == 2 && extendee[0] == escapeChar && extendee[1] == '0')
-        return null;
+      if (extendee.Length == 2 && extendee[0] == escapeChar && extendee[1] == '0') return null;
 
-      if (string.IsNullOrEmpty(extendee))
-        return Array.Empty<string>();
+      if (string.IsNullOrEmpty(extendee)) return Array.Empty<string>();
 
-      var elementBuilders = new List<StringBuilder>();
+      List<StringBuilder> elementBuilders = new List<StringBuilder>();
 
       extendee.ForEachEnclosedTupleElement((tokenIndex, elementBuilder) => {
         elementBuilders.Add(elementBuilder);
@@ -324,7 +333,7 @@ namespace System.SmartStandards {
 
       int upperBound = elementBuilders.Count - 1;
 
-      var tokens = new string[upperBound + 1];
+      string[] tokens = new string[upperBound + 1];
 
       for (int i = 0, loopTo = upperBound; i <= loopTo; i++) tokens[i] = elementBuilders[i]?.ToString();
 
