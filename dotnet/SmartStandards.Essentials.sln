@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{40B62F93-2DA
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStandards.Essentials.net480", "src\Essentials.net480\SmartStandards.Essentials.net480.csproj", "{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStandards.Essentials.net48", "src\Essentials.net480\SmartStandards.Essentials.net48.csproj", "{6A82F930-1C4C-4A6F-A132-0CD66E7DFD7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStandards.Essentials.net8.0", "src\Essentials.net8.0\SmartStandards.Essentials.net8.0.csproj", "{445AE90F-8EA8-4C93-81E6-B72A66B65737}"
 EndProject
@@ -58,7 +58,6 @@ Global
 		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{445AE90F-8EA8-4C93-81E6-B72A66B65737}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
