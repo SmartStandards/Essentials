@@ -6,7 +6,7 @@ This files contains a version history including all changes relevant for semanti
 
 ## Upcoming Changes
 
-- Targets 4.8.0 and 8.0
+- Targets 4.8.0 and 8.0 added
 
 
 
