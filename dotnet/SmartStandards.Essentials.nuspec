@@ -19,8 +19,10 @@
       </group>
       <group targetFramework=".NETFramework4.8">
       </group>
-      <!--<group targetFramework="net6.0">
-      </group>-->
+      <group targetFramework="net6.0">
+      </group>
+			<!--<group targetFramework="net8.0">
+			</group>-->
     </dependencies>
   </metadata>
   <files>
