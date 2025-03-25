@@ -6,9 +6,9 @@ This files contains a version history including all changes relevant for semanti
 
 ## Upcoming Changes
 
+- New Feature: AppendResolved() extension methods for StringBuilders (placeholder resolving).
+
 - Targets 4.8.0 and 8.0 added
-
-
 
 ## v 0.5.2
 released **2025-03-15**, including:

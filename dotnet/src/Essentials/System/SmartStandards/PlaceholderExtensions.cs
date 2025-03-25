@@ -30,8 +30,8 @@ namespace System.SmartStandards {
     /// </param>
     public static void ForEachPlaceholder(
       this string extendee,
-      Func<string, bool> onPlaceholderFound, 
-      Action<int, int> onRegularSegmentFound = null, 
+      Func<string, bool> onPlaceholderFound,
+      Action<int, int> onRegularSegmentFound = null,
       bool omitPlaceholderNames = false
     ) {
 
@@ -85,18 +85,11 @@ namespace System.SmartStandards {
 
       if (extendee is null || extendee.Length < 3 || maxIndex < 0) return extendee;
 
-      int i = -1;
+      StringBuilder targetStringBuilder = new StringBuilder(extendee.Length * 15 / 10);
 
-      string onResolvePlaceholder(string dummyName) {
-        i++;
-        if (i <= maxIndex) {
-          return args[i]?.ToString();
-        } else {
-          return null;
-        }
-      }
-     
-      return extendee.ResolvePlaceholdersByCallback(onResolvePlaceholder, true);
+      targetStringBuilder.AppendResolved(extendee, args);
+
+      return targetStringBuilder.ToString();
     }
 
     /// <summary>
@@ -124,7 +117,8 @@ namespace System.SmartStandards {
         int left = -1;
 
         for (int i = cursor; i < extendee.Length; i++) {
-          if (extendee[i] == '{') { left = i; break; };
+          if (extendee[i] == '{') { left = i; break; }
+          ;
         }
 
         if (left == -1) { break; }
@@ -132,7 +126,8 @@ namespace System.SmartStandards {
         int right = -1;
 
         for (int i = left; i < extendee.Length; i++) {
-          if (extendee[i] == '}') { right = i; break; };
+          if (extendee[i] == '}') { right = i; break; }
+          ;
         }
 
         if (right == -1) { break; }
@@ -161,22 +156,26 @@ namespace System.SmartStandards {
           return value ?? ""; // Value is null => render empty string
         } else {
           return null; // Value not existing => return null => leave placeholder unchanged
-        } 
+        }
       }
 
-      return extendee.ResolvePlaceholdersByCallback(onResolvePlaceholder);
+      StringBuilder targetStringBuilder = new StringBuilder(extendee.Length * 15 / 10);
+
+      targetStringBuilder.AppendResolving(extendee, onResolvePlaceholder);
+
+      return targetStringBuilder.ToString();
     }
 
     public static string ResolvePlaceholdersByPropertyBag(this string extendee, object propertyBag) {
 
       if (extendee is null || extendee.Length < 3 || propertyBag is null) return extendee;
-      
+
       string onResolvePlaceholder(string placeholderName) {
 
         PropertyInfo propertyInfo = propertyBag.GetType().GetProperty(
           placeholderName, BindingFlags.Public | BindingFlags.IgnoreCase | BindingFlags.Instance
         );
-        
+
         if (propertyInfo != null) {
           return propertyInfo.GetValue(propertyBag).ToString() ?? ""; // Property value is null => render empty string
         } else {
@@ -184,13 +183,17 @@ namespace System.SmartStandards {
         }
       }
 
-      return extendee.ResolvePlaceholdersByCallback(onResolvePlaceholder);
+      StringBuilder targetStringBuilder = new StringBuilder(extendee.Length * 15 / 10);
+
+      targetStringBuilder.AppendResolving(extendee, onResolvePlaceholder);
+
+      return targetStringBuilder.ToString();
     }
 
     /// <summary>
-    ///   Resolves named placeholders in a template string by calling back a resolving method for each placeholder.
+    ///   Appends a resolved template string to an existing StringBuilder while calling back a resolving method for each placeholder.
     /// </summary>
-    /// <param name="extendee"> A template string containing named placeholders. E.g. "Hello {audience}, the answer is {answer}."</param>
+    /// <param name="template"> A template string containing named placeholders. E.g. "Hello {audience}, the answer is {answer}."</param>
     /// <param name="onResolvePlaceholder">
     ///   string onResolvePlaceholder(name).
     ///   Will be called for each placeholder in order of appearance.
@@ -203,31 +206,59 @@ namespace System.SmartStandards {
     ///   Performance optimization. If true, the placeholder name is not extracted from the template.
     /// </param>
     /// <returns> The resolved string. </returns>
-    public static string ResolvePlaceholdersByCallback(
-      this string extendee, 
-      Func<string, string> onResolvePlaceholder, 
+    public static StringBuilder AppendResolving(
+      this StringBuilder extendee,
+      string template,
+      Func<string, string> onResolvePlaceholder,
       bool omitPlaceholderNames = false
     ) {
 
-      if (extendee is null || extendee.Length < 3 || onResolvePlaceholder is null) return extendee;
+      if (extendee == null) return null;
 
-      StringBuilder targetStringBuilder = new StringBuilder(extendee.Length * 15 / 10);
+      if (template is null || template.Length < 3 || onResolvePlaceholder is null) {
+        extendee.Append(template);
+        return extendee;
+      }
 
       bool onPlaceholderFound(string placeholderName) {
         string value = onResolvePlaceholder.Invoke(placeholderName);
         if (value != null) {
-          targetStringBuilder.Append(value);
+          extendee.Append(value);
         } else {
-          targetStringBuilder.Append('{').Append(placeholderName).Append('}');
+          extendee.Append('{').Append(placeholderName).Append('}');
         }
         return false;
       }
 
-      void onRegularSegmentFound(int pos, int length) => targetStringBuilder.Append(extendee, pos, length);
+      void onRegularSegmentFound(int pos, int length) => extendee.Append(template, pos, length);
 
-      extendee.ForEachPlaceholder(onPlaceholderFound, onRegularSegmentFound, omitPlaceholderNames);
+      template.ForEachPlaceholder(onPlaceholderFound, onRegularSegmentFound, omitPlaceholderNames);
 
-      return targetStringBuilder.ToString();
+      return extendee;
+    }
+
+    public static StringBuilder AppendResolved(this StringBuilder extendee, string template, params object[] args) {
+
+      if (extendee == null) return null;
+
+      int maxIndex = args != null ? args.GetUpperBound(0) : -1;
+
+      if (template is null || template.Length < 3 || maxIndex < 0) return extendee;
+
+      int i = -1;
+
+      string onResolvePlaceholder(string dummyName) {
+        i++;
+        if (i <= maxIndex) {
+          return args[i]?.ToString();
+        } else {
+          return null;
+        }
+      }
+
+      extendee.AppendResolving(template, onResolvePlaceholder, true);
+
+      return extendee;
     }
 
   }
