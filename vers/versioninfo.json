@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.5.2",
-  "currentVersionWithSuffix": "0.5.2",
+  "currentVersion": "0.6.0",
+  "currentVersionWithSuffix": "0.6.0",
   "releaseType": "official",
-  "previousVersion": "0.5.1",
-  "changeGrade": "patch",
+  "previousVersion": "0.5.2",
+  "changeGrade": "minor",
   "currentMajor": 0,
-  "currentMinor": 5,
-  "currentPatch": 2,
-  "versionDateInfo": "2025-03-15",
-  "versionTimeInfo": "16:33:57",
-  "versionNotes": "- None effective changes. Reformatted code.\n"
+  "currentMinor": 6,
+  "currentPatch": 0,
+  "versionDateInfo": "2025-03-25",
+  "versionTimeInfo": "07:22:44",
+  "versionNotes": "- New Feature: AppendResolved() extension methods for StringBuilders (placeholder resolving).\n- Targets 4.8.0 and 8.0 added\n"
 }
