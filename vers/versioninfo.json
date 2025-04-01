@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.6.0",
-  "currentVersionWithSuffix": "0.6.0",
+  "currentVersion": "0.6.1",
+  "currentVersionWithSuffix": "0.6.1",
   "releaseType": "official",
-  "previousVersion": "0.5.2",
-  "changeGrade": "minor",
+  "previousVersion": "0.6.0",
+  "changeGrade": "patch",
   "currentMajor": 0,
   "currentMinor": 6,
-  "currentPatch": 0,
-  "versionDateInfo": "2025-03-25",
-  "versionTimeInfo": "07:22:44",
-  "versionNotes": "- New Feature: AppendResolved() extension methods for StringBuilders (placeholder resolving).\n- Targets 4.8.0 and 8.0 added\n"
+  "currentPatch": 1,
+  "versionDateInfo": "2025-04-01",
+  "versionTimeInfo": "12:34:26",
+  "versionNotes": "- Compier Konstante NET6\n"
 }
