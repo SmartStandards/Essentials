@@ -8,7 +8,7 @@ This files contains a version history including all changes relevant for semanti
 
 *(none)*
 
-
+- (Internal:) Project folders renamed to be equal to project file name
 
 ## v 0.6.1
 released **2025-04-01**, including:

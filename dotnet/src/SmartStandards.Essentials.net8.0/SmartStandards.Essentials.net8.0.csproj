@@ -20,6 +20,6 @@
     <DocumentationFile>..\..\dist\bin-net8.0\SmartStandards.Essentials.xml</DocumentationFile>
   </PropertyGroup>
 
-  <Import Project="..\Essentials\SmartStandards.Essentials.projitems" Label="Shared" />
+  <Import Project="..\SmartStandards.Essentials\SmartStandards.Essentials.projitems" Label="Shared" />
 
 </Project>

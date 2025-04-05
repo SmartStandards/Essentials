@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Essentials.net6.0\SmartStandards.Essentials.net6.0.csproj" />
+    <ProjectReference Include="..\..\src\SmartStandards.Essentials.net6.0\SmartStandards.Essentials.net6.0.csproj" />
   </ItemGroup>
 
 </Project>

@@ -38,6 +38,6 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <Import Project="..\Essentials\SmartStandards.Essentials.projitems" Label="Shared" />
+  <Import Project="..\SmartStandards.Essentials\SmartStandards.Essentials.projitems" Label="Shared" />
 
 </Project>
