@@ -4,7 +4,7 @@ using System.Text;
 
 namespace System.SmartStandards {
 
-  public static class PlaceholderExtensions {
+  public static class PlaceholderExtensions { // v 1.0.0
 
     /// <summary>
     ///   Executes a callback method for each placeholder in a template string.
@@ -243,7 +243,10 @@ namespace System.SmartStandards {
 
       int maxIndex = args != null ? args.GetUpperBound(0) : -1;
 
-      if (template is null || template.Length < 3 || maxIndex < 0) return extendee;
+      if (template is null || template.Length < 3 || maxIndex < 0) {
+        extendee.Append(template);
+        return extendee;
+      }
 
       int i = -1;
 

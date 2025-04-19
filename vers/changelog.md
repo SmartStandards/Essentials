@@ -1,12 +1,10 @@
 # Change log
 
-This files contains a version history including all changes relevant for semantic versioning...
-
-*(it is automatically maintained using the ['KornSW-VersioningUtil'](https://github.com/KornSW/VersioningUtil))*
+This file is automatically maintained using the ['KornSW-VersioningUtil'](https://github.com/KornSW/VersioningUtil)
 
 ## Upcoming Changes
 
-*(none)*
+- Bugfix: PlaceholderExtensions.AppendResolved("AddingPortion") did not add anything
 
 - (Internal:) Project folders renamed to be equal to project file name
 

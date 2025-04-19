@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace System.SmartStandards {
 
@@ -28,18 +29,38 @@ namespace System.SmartStandards {
       // Missing values & malformed
 
       Assert.AreEqual("{Original} string.", "{Original} string.".ResolvePlaceholdersByPropertyBag(null));
-     
+
       Assert.AreEqual(
         "Hello FooValue barValue {NotExisting} World.",
         "Hello {Foo} {Bar} {NotExisting} World.".ResolvePlaceholdersByPropertyBag(propertyBag1)
       );
-      
+
       Assert.AreEqual("{}", "{}".ResolvePlaceholdersByPropertyBag(propertyBag1));
-      
+
       Assert.AreEqual("{} FooValue", "{} {Foo}".ResolvePlaceholdersByPropertyBag(propertyBag1));
-      
+
       Assert.AreEqual("{Foo {bar}", "{Foo {bar}".ResolvePlaceholdersByPropertyBag(propertyBag1));
 
+    }
+
+    [TestMethod()]
+    public void AppendResolved_VariousTestPatterns_CreateExpectedStrings() {
+
+      StringBuilder sb = new StringBuilder(4096);
+
+      sb.Append("LeftPart");
+
+      sb.AppendResolved(null);
+
+      Assert.AreEqual("LeftPart", sb.ToString());
+
+      sb.AppendResolved("");
+
+      Assert.AreEqual("LeftPart", sb.ToString());
+
+      sb.AppendResolved("RightPart");
+
+      Assert.AreEqual("LeftPartRightPart", sb.ToString());
     }
 
   }
