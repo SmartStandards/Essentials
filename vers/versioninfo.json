@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.6.1",
-  "currentVersionWithSuffix": "0.6.1",
+  "currentVersion": "0.6.2",
+  "currentVersionWithSuffix": "0.6.2",
   "releaseType": "official",
-  "previousVersion": "0.6.0",
+  "previousVersion": "0.6.1",
   "changeGrade": "patch",
   "currentMajor": 0,
   "currentMinor": 6,
-  "currentPatch": 1,
-  "versionDateInfo": "2025-04-01",
-  "versionTimeInfo": "12:34:26",
-  "versionNotes": "- Compier Konstante NET6\n"
+  "currentPatch": 2,
+  "versionDateInfo": "2025-04-19",
+  "versionTimeInfo": "06:14:10",
+  "versionNotes": "- (Internal:) Project folders renamed to be equal to project file name\n- Bugfix: PlaceholderExtensions.AppendResolved(\"AddingPortion\") did not add anything\n"
 }

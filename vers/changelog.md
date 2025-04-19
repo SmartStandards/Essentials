@@ -4,9 +4,16 @@ This file is automatically maintained using the ['KornSW-VersioningUtil'](https:
 
 ## Upcoming Changes
 
-- Bugfix: PlaceholderExtensions.AppendResolved("AddingPortion") did not add anything
+*(none)*
 
-- (Internal:) Project folders renamed to be equal to project file name
+
+
+## v 0.6.2
+released **2025-04-19**, including:
+ - (Internal:) Project folders renamed to be equal to project file name
+ - Bugfix: PlaceholderExtensions.AppendResolved("AddingPortion") did not add anything
+
+
 
 ## v 0.6.1
 released **2025-04-01**, including:
