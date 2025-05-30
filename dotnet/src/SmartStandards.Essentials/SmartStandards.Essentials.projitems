@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)System\SmartStandards\PlaceholderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\SmartStandards\EnclosedTupleExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Threading\SmartStandards\MultiTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)system\smartstandards\PlaceholderExtensions.ChangeLog.md" />
