@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Text;
 
 namespace System.SmartStandards {
@@ -43,6 +44,25 @@ namespace System.SmartStandards {
 
       Assert.AreEqual(0, @"#Mambo\#\Five#HeyJude#".IndexOfTupleElement("Mambo#Five"));
       Assert.AreEqual(0, @"#Mambo\#\#".IndexOfTupleElement("Mambo#"));
+
+    }
+
+    [TestMethod()]
+    public void AppendManyToEnclosedTuple_VariousTestPatterns_CreateExpectedStrings() {
+
+      long[] longValues = { 2083349424987289070, 2083349429634175975, 2083349433585439538 };
+
+      Assert.AreEqual(
+        "#2083349424987289070#2083349429634175975#2083349433585439538#",
+        new StringBuilder().AppendManyToEnclosedTuple(longValues).ToString()
+      );
+
+      List<DateTime> dateValues = new List<DateTime> { new DateTime(1973, 12, 9), new DateTime(2000, 1, 1), new DateTime(2022, 2, 22) };
+
+      Assert.AreEqual(
+        "#1973-12-09#2000-01-01#2022-02-22#",
+        new StringBuilder().AppendManyToEnclosedTuple(dateValues, (d) => ((DateTime)d).ToString("yyyy-MM-dd")).ToString()
+      );
 
     }
 
@@ -141,13 +161,32 @@ namespace System.SmartStandards {
       Assert.AreEqual(@"B\atz#", bEscapedMalformed[2]);
 
     }
-    
+
     [TestMethod()]
-    public void ToEnclosedTuple_VariousTestPatterns_CreateExpectedResults() {
-      
+    public void ToEnclosedTuple_IEnumerables_CreateExpectedResults() {
+
+      long[] longValues = { 2083349424987289070, 2083349429634175975, 2083349433585439538 };
+
+      Assert.AreEqual(
+        "#2083349424987289070#2083349429634175975#2083349433585439538#",
+        longValues.ToEnclosedTuple()
+      );
+
+      List<DateTime> dateValues = new List<DateTime> { new DateTime(1973, 12, 9), new DateTime(2000, 1, 1), new DateTime(2022, 2, 22) };
+
+      Assert.AreEqual(
+        "#1973-12-09#2000-01-01#2022-02-22#",
+        dateValues.ToEnclosedTuple((d) => ((DateTime)d).ToString("yyyy-MM-dd"))
+      );
+
+    }
+
+    [TestMethod()]
+    public void ToEnclosedTuple_StringArrays_CreateExpectedResults() {
+
       String[] stringArray;
-      
-      stringArray = new String[] { "First", "Mambo#Five" };      
+
+      stringArray = new String[] { "First", "Mambo#Five" };
       Assert.AreEqual(@"#First#Mambo\#\Five#", stringArray.ToEnclosedTuple());
 
     }
