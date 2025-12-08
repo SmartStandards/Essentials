@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.6.3",
-  "currentVersionWithSuffix": "0.6.3",
+  "currentVersion": "0.7.0",
+  "currentVersionWithSuffix": "0.7.0",
   "releaseType": "",
-  "previousVersion": "0.6.2",
-  "changeGrade": "fix",
+  "previousVersion": "0.6.3",
+  "changeGrade": "minor",
   "currentMajor": 0,
-  "currentMinor": 6,
-  "currentPatch": 3,
-  "versionDateInfo": "2025-05-30",
-  "versionTimeInfo": "12:58:30",
-  "versionNotes": "- Removed .NET 4.6-Targets and enabled .NET 8.0-Targets (while switching build-runner from Win-2019 to WIN-2022)\n"
+  "currentMinor": 7,
+  "currentPatch": 0,
+  "versionDateInfo": "2025-12-08",
+  "versionTimeInfo": "14:20:11",
+  "versionNotes": "- New Feature: Additional EnclosedTupleExtensions for direct rendering of collections to tuples.\n"
 }

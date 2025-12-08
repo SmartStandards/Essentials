@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,7 +8,7 @@
     <AssemblyName>SmartStandards.Essentials</AssemblyName>
     <PackageId>SmartStandards.Essentials</PackageId>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>999.0.0</Version>
+    <Version>0.7.0</Version>
     <Authors>SmartStandards</Authors>
     <Company>(public domain)</Company>
     <Product>SmartStandards.Essentials</Product>
