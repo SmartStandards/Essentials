@@ -1,13 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace System.SmartStandards {
 
   public static class EnclosedTupleExtensions {
 
+    /// <summary>
+    ///   Returns the 0-based index of a given tuple element (if present).
+    /// </summary>
+    /// <param name="extendee"> A tuple like this: "#Foo#Bar#Batz#". </param>
+    /// <param name="value"> The value to search for (e.g. "Bar"). </param>
+    /// <param name="separator"> Optional customized separator. The default separator is '#'. </param>
+    /// <param name="escapeChar"> Optional customized escape char. The default is '\'. </param>
+    /// <returns>
+    ///   The 0-based index of value (e.g. "Bar" would return 1).
+    ///   -1 if value is not present.
+    ///   -2 if the search failed because of a malformed tuple.
+    /// </returns>
     public static int IndexOfTupleElement(
-      this string extendee, string value, 
-      char separator = '#', 
+      this string extendee, string value,
+      char separator = '#',
       char escapeChar = '\\'
     ) {
 
@@ -111,14 +124,46 @@ namespace System.SmartStandards {
     }
 
     /// <summary>
+    ///   Appends values to a StringBuilder instance, following the conventions of an enclosed tuple.
+    /// </summary>
+    /// <param name="extendee"> The target StringBuilder instance into which the tuple elements will be added. </param>
+    /// <param name="values"> Values to append. They will be converted to string first. </param>
+    /// <param name="onConvertToString"> Optional custom converter. By default, .ToString() is used. </param>
+    /// <param name="separator"> Optional customized separator. The default separator is '#'. </param>
+    /// <param name="escapeChar"> Optional customized escape char. The default is '\'. </param>
+    /// <returns> The incoming StringBuilder instance (for fluent syntax).</returns>
+    public static StringBuilder AppendManyToEnclosedTuple(
+      this StringBuilder extendee, IEnumerable values,
+      Func<object, string> onConvertToString = null,
+      char separator = '#',
+      char escapeChar = '\\'
+    ) {
+
+      foreach (object value in values) {
+        string valueAsString;
+        if (onConvertToString != null) {
+          valueAsString = onConvertToString.Invoke(value);
+        } else {
+          valueAsString = value.ToString();
+        }
+        EnclosedTupleExtensions.AppendToEnclosedTuple(extendee, valueAsString, separator, escapeChar);
+      }
+
+      return extendee;
+    }
+
+    /// <summary>
     ///   Appends value to a StringBuilder instance, following the conventions of an enclosed tuple.
     /// </summary>
+    /// <param name="extendee"> The target StringBuilder instance into which the tuple elements will be added. </param>
     /// <param name="value"> 
     ///   The string to append. 
     ///   If it is null, it will be escaped to "\0".
     ///   If it is an empty string, it will be appended as empty string.
     ///   If the string contains occurances of the separator or the escape char, they will be escaped.
     /// </param>
+    /// /// <param name="separator"> Optional customized separator. The default separator is '#'. </param>
+    /// <param name="escapeChar"> Optional customized escape char. The default is '\'. </param>
     /// <remarks>
     ///   Examples:
     ///   {null} => "#\0#"
@@ -127,9 +172,10 @@ namespace System.SmartStandards {
     ///   {"Foo","Bar"} => "#Foo#Bar#"
     ///   {"Fo#o","Ba\r"} => "#Fo\#o#Ba\\r#"
     /// </remarks>
+    /// <returns> The incoming StringBuilder instance (for fluent syntax).</returns>
     public static StringBuilder AppendToEnclosedTuple(
-      this StringBuilder extendee, string value, 
-      char separator = '#', 
+      this StringBuilder extendee, string value,
+      char separator = '#',
       char escapeChar = '\\'
     ) {
 
@@ -160,6 +206,25 @@ namespace System.SmartStandards {
       return extendee;
     }
 
+    public static String ToEnclosedTuple(
+      this IEnumerable extendee,
+      Func<object, string> onConvertToString = null,
+      bool allowNull = false,
+      string nullRepresentation = "\0"
+    ) {
+
+      if (extendee == null) {
+        if (!allowNull) throw new ArgumentNullException(nameof(extendee));
+        return nullRepresentation;
+      }
+
+      StringBuilder enclosedTupleBuilder = new StringBuilder(250);
+
+      EnclosedTupleExtensions.AppendManyToEnclosedTuple(enclosedTupleBuilder, extendee, onConvertToString);
+
+      return enclosedTupleBuilder.ToString();
+    }
+
     /// <summary>
     ///   Renders an enclosed tuple representation from the given array.
     /// </summary>
@@ -175,8 +240,8 @@ namespace System.SmartStandards {
     ///   {"Fo#o","Ba\r"} => "#Fo\#o#Ba\\r#"
     /// </returns>
     public static String ToEnclosedTuple(
-      this String[] extendee, 
-      bool allowNull = false, 
+      this String[] extendee,
+      bool allowNull = false,
       string nullRepresentation = "\0"
     ) {
 
