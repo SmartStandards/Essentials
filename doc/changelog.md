@@ -4,7 +4,13 @@ This file is automatically maintained using the ['KornSW-VersioningUtil'](https:
 
 ## Upcoming Changes
 
-- New Feature: Additional EnclosedTupleExtensions for direct rendering of collections to tuples.
+- Bugfix: ForEachEnclosedTupleElement called with null (for counting) threw an axception when tuple contained "#\0#" (a null element).
+
+
+
+## v 0.7.0
+released **2025-12-08**, including:
+ - New Feature: Additional EnclosedTupleExtensions for direct rendering of collections to tuples.
 
 
 

@@ -344,16 +344,19 @@ namespace System.SmartStandards {
 
         } else if (peek == separator) { // Separator char detected => handle current element, start a new one
 
-          if (nulled) {
-            if ((bool)(onEachElementMethod?.Invoke(elementIndex, null))) return elementIndex + 1;
-          } else if (elementBuilder != null) {
-            if (onEachElementMethod.Invoke(elementIndex, elementBuilder)) return elementIndex + 1;
+          if (onEachElementMethod != null) {
+
+            if (nulled) {
+              if (onEachElementMethod.Invoke(elementIndex, null)) return elementIndex + 1;
+            } else if (elementBuilder != null) {
+              if (onEachElementMethod.Invoke(elementIndex, elementBuilder)) return elementIndex + 1;
+            }
+
+            elementBuilder = new StringBuilder(80);
           }
 
           elementIndex += 1;
           nulled = false;
-
-          if (onEachElementMethod != null) elementBuilder = new StringBuilder(80);
 
         } else {
           elementBuilder?.Append(peek);
