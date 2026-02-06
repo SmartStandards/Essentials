@@ -4,7 +4,7 @@ This file is automatically maintained using the ['KornSW-VersioningUtil'](https:
 
 ## Upcoming Changes
 
-*(none)*
+- Bugfix: ForEachEnclosedTupleElement called with null (for counting) threw an axception when tuple contained "#\0#" (a null element).
 
 
 
