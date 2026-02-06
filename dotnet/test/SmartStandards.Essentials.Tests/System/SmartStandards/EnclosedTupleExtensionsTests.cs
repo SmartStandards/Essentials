@@ -204,6 +204,7 @@ namespace System.SmartStandards {
       Assert.AreEqual(0, "".ForEachEnclosedTupleElement(null));
 
       Assert.AreEqual(0, @"\0".ForEachEnclosedTupleElement(null));
+      Assert.AreEqual(1, @"#\0#".ForEachEnclosedTupleElement(null));
 
       Assert.AreEqual(-2, "a#".ForEachEnclosedTupleElement(null));
       Assert.AreEqual(-2, "#a".ForEachEnclosedTupleElement(null));
