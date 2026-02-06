@@ -8,7 +8,7 @@
     <AssemblyName>SmartStandards.Essentials</AssemblyName>
     <PackageId>SmartStandards.Essentials</PackageId>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>0.7.0</Version>
+    <Version>0.7.1</Version>
     <Authors>SmartStandards</Authors>
     <Company>(public domain)</Company>
     <Product>SmartStandards.Essentials</Product>

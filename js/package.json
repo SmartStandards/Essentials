@@ -1,6 +1,6 @@
 {
   "name": "smartstandards-essentials",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Essentials",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
