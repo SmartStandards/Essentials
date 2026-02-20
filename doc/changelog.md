@@ -4,7 +4,12 @@ This file is automatically maintained using the ['KornSW-VersioningUtil'](https:
 
 ## Upcoming Changes
 
-- Bug fix: ForEachEnclosedTupleElement called with null (for counting) threw an axception when tuple contained a null element.
+ - New Feature: Additional EnclosedTupleExtensions for handling integer and long tuples.
+
+
+## v 0.7.1
+released **2026-02-06**, including:
+ - Bug fix: ForEachEnclosedTupleElement called with null (for counting) threw an axception when tuple contained a null element.
 
 
 

@@ -80,7 +80,49 @@ namespace System.SmartStandards {
     }
 
     [TestMethod()]
-    public void SplitEnclosedTuple_VariousTestPatterns_CreateExpectedArrays() {
+    public void SplitEnclosedTuple_MalformedTestPatterns_CreateExpectedArrays() {
+
+      // "#" => malformed => ???  
+
+      String[] unclosedSeparator = @"#".SplitEnclosedTuple();
+      Assert.IsNull(unclosedSeparator);
+
+      // "#\0Foo#" => malformed ("#\0#" should stand alone) => Gracefully return the original string
+
+      String[] malformedNullAtStart = @"#\0Foo#".SplitEnclosedTuple();
+
+      Assert.AreEqual(1, malformedNullAtStart.Length);
+      Assert.AreEqual(@"\0Foo", malformedNullAtStart[0]);
+
+      // "#Foo\0#" => malformed ("#\0#" should stand alone) => Gracefully return the original string
+
+      String[] malformedNullAtEnd = @"#Foo\0#".SplitEnclosedTuple();
+      Assert.AreEqual(1, malformedNullAtEnd.Length);
+      Assert.AreEqual(@"Foo\0", malformedNullAtEnd[0]);
+
+      // "#Foo\0Foo#" => malformed ("#\0#" should stand alone) => Gracefully return the original string
+
+      String[] malformedNullInbetween = @"#Foo\0Bar#".SplitEnclosedTuple();
+      Assert.AreEqual(1, malformedNullInbetween.Length);
+      Assert.AreEqual(@"Foo\0Bar", malformedNullInbetween[0]);
+
+      // "#\#Foo#B\#ar#B\\atz\##" => escaping was not done symmetrically => ???
+
+      String[] bEscapedMalformed = @"#\#Foo#B\#ar#B\\atz\##".SplitEnclosedTuple();
+
+      Assert.AreEqual(3, bEscapedMalformed.Length);
+      Assert.AreEqual("#Foo", bEscapedMalformed[0]);
+      Assert.AreEqual("B#ar", bEscapedMalformed[1]);
+      Assert.AreEqual(@"B\atz#", bEscapedMalformed[2]);
+
+      // Having not escaped escape chars directly before the closing # => ???
+
+      String[] escapedEscapeChars = @"#C:\\Temp\#D:\\Data\\Foo#".SplitEnclosedTuple();
+
+    }
+
+    [TestMethod()]
+    public void SplitEnclosedTuple_ProperTestPatterns_CreateExpectedArrays() {
 
       // Tuple itself Is null
 
@@ -88,28 +130,28 @@ namespace System.SmartStandards {
 
       Assert.IsNull(nullString.SplitEnclosedTuple());
 
-      // Tuple represents a null container ("\0")
+      // "\0" => null tuple itself
 
       Assert.IsNull(@"\0".SplitEnclosedTuple());
 
-      // Collection Is empty
+      // Empty string => empty collection
 
       String[] emptyCollection = "".SplitEnclosedTuple();
 
       Assert.AreEqual(-1, emptyCollection.GetUpperBound(0));
 
-      // Collection contains one null element
+      // "#\0#" => collection containing one null element
 
       String[] onlyOneNull = @"#\0#".SplitEnclosedTuple();
 
-      Assert.AreEqual(0, onlyOneNull.GetUpperBound(0));
+      Assert.AreEqual(1, onlyOneNull.Length);
       Assert.IsNull(onlyOneNull[0]);
 
-      // Collection contains one empty string
+      // "##" => collection containing one empty string
 
       String[] onlyOneEmpty = "##".SplitEnclosedTuple();
 
-      Assert.AreEqual(0, onlyOneEmpty.GetUpperBound(0));
+      Assert.AreEqual(1, onlyOneEmpty.Length);
       Assert.AreEqual("", onlyOneEmpty[0]);
 
       // Collection contains one string
@@ -121,45 +163,88 @@ namespace System.SmartStandards {
 
       String[] threeSimple = "#Foo#Bar#Batz#".SplitEnclosedTuple();
 
-      Assert.AreEqual(2, threeSimple.GetUpperBound(0));
+      Assert.AreEqual(3, threeSimple.Length);
       Assert.AreEqual("Foo", threeSimple[0]);
       Assert.AreEqual("Bar", threeSimple[1]);
       Assert.AreEqual("Batz", threeSimple[2]);
 
       String[] leadingEmpty = "##Bar#Batz#".SplitEnclosedTuple();
 
-      Assert.AreEqual(2, leadingEmpty.GetUpperBound(0));
+      Assert.AreEqual(3, leadingEmpty.Length);
       Assert.AreEqual("", leadingEmpty[0]);
       Assert.AreEqual("Bar", leadingEmpty[1]);
       Assert.AreEqual("Batz", leadingEmpty[2]);
 
       String[] trailingEmpty = "#Foo#Bar##".SplitEnclosedTuple();
 
-      Assert.AreEqual(2, trailingEmpty.GetUpperBound(0));
+      Assert.AreEqual(3, trailingEmpty.Length);
       Assert.AreEqual("Foo", trailingEmpty[0]);
       Assert.AreEqual("Bar", trailingEmpty[1]);
       Assert.AreEqual("", trailingEmpty[2]);
 
       String[] twoEmpty = "###".SplitEnclosedTuple();
 
-      Assert.AreEqual(1, twoEmpty.GetUpperBound(0));
+      Assert.AreEqual(2, twoEmpty.Length);
       Assert.AreEqual("", twoEmpty[0]);
       Assert.AreEqual("", twoEmpty[1]);
 
-      String[] bEscaped = @"#\#\Foo#B\#\ar#B\\atz\#\#".SplitEnclosedTuple();
+      // Having an escaped # in the middle of an element => should not cause a split
 
-      Assert.AreEqual(2, bEscaped.GetUpperBound(0));
-      Assert.AreEqual("#Foo", bEscaped[0]);
-      Assert.AreEqual("B#ar", bEscaped[1]);
-      Assert.AreEqual(@"B\atz#", bEscaped[2]);
+      String[] escapedSeparators = @"#\#\Foo#B\#\ar#B\\atz\#\#IEndWithBackslahZero\\0#".SplitEnclosedTuple();
 
-      String[] bEscapedMalformed = @"#\#Foo#B\#ar#B\\atz\##".SplitEnclosedTuple();
+      Assert.AreEqual(4, escapedSeparators.Length);
+      Assert.AreEqual("#Foo", escapedSeparators[0]);
+      Assert.AreEqual("B#ar", escapedSeparators[1]);
+      Assert.AreEqual(@"B\atz#", escapedSeparators[2]);
+      Assert.AreEqual(@"IEndWithBackslahZero\0", escapedSeparators[3]);
 
-      Assert.AreEqual(2, bEscapedMalformed.GetUpperBound(0));
-      Assert.AreEqual("#Foo", bEscapedMalformed[0]);
-      Assert.AreEqual("B#ar", bEscapedMalformed[1]);
-      Assert.AreEqual(@"B\atz#", bEscapedMalformed[2]);
+      // Having escaped escape chars => should unescape the escape char
 
+      String[] escapedEscapeChars = @"#C:\\Temp\\#D:\\Data\\Foo#".SplitEnclosedTuple();
+
+      Assert.AreEqual(2, escapedEscapeChars.Length);
+      Assert.AreEqual("C:\\Temp\\", escapedEscapeChars[0]);
+      Assert.AreEqual("D:\\Data\\Foo", escapedEscapeChars[1]);
+    }
+
+    [TestMethod()]
+    public void SplitEnclosedTupleToInt() {
+
+      int[] intValues = "#1#2#3#".SplitEnclosedTupleToInt();
+      Assert.AreEqual(3, intValues.Length);
+      Assert.AreEqual(1, intValues[0]);
+      Assert.AreEqual(2, intValues[1]);
+      Assert.AreEqual(3, intValues[2]);
+
+      // Error case: Not a number
+
+      int[] intValuesNotANumber = "#1#abc#3#".SplitEnclosedTupleToInt();
+      Assert.IsNull(intValuesNotANumber);
+
+      // Error case: Too big for int
+
+      int[] intValuesTooBig = "#1#2083349429634175975#3#".SplitEnclosedTupleToInt();
+      Assert.IsNull(intValuesTooBig);
+    }
+
+    [TestMethod()]
+    public void SplitEnclosedTupleToLong() {
+
+      long[] longValues = "#1#2#3#".SplitEnclosedTupleToLong();
+      Assert.AreEqual(3, longValues.Length);
+      Assert.AreEqual(1, longValues[0]);
+      Assert.AreEqual(2, longValues[1]);
+      Assert.AreEqual(3, longValues[2]);
+
+      // Error case: Not a number
+
+      long[] longValuesNotANumber = "#1#abc#3#".SplitEnclosedTupleToLong();
+      Assert.IsNull(longValuesNotANumber);
+
+      // Error case: Too big for long
+
+      long[] longValuesTooBig = "#1#22222222083349429634175975#3#".SplitEnclosedTupleToLong();
+      Assert.IsNull(longValuesTooBig);
     }
 
     [TestMethod()]
@@ -188,7 +273,6 @@ namespace System.SmartStandards {
 
       stringArray = new String[] { "First", "Mambo#Five" };
       Assert.AreEqual(@"#First#Mambo\#\Five#", stringArray.ToEnclosedTuple());
-
     }
 
     [TestMethod()]

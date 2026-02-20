@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.7.0",
-  "currentVersionWithSuffix": "0.7.0",
+  "currentVersion": "0.7.1",
+  "currentVersionWithSuffix": "0.7.1",
   "releaseType": "",
-  "previousVersion": "0.6.3",
-  "changeGrade": "minor",
+  "previousVersion": "0.7.0",
+  "changeGrade": "fix",
   "currentMajor": 0,
   "currentMinor": 7,
-  "currentPatch": 0,
-  "versionDateInfo": "2025-12-08",
-  "versionTimeInfo": "14:20:11",
-  "versionNotes": "- New Feature: Additional EnclosedTupleExtensions for direct rendering of collections to tuples.\n"
+  "currentPatch": 1,
+  "versionDateInfo": "2026-02-06",
+  "versionTimeInfo": "13:28:15",
+  "versionNotes": "- Bug fix: ForEachEnclosedTupleElement called with null (for counting) threw an axception when tuple contained a null element.\n"
 }
