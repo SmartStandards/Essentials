@@ -4,7 +4,14 @@ This file is automatically maintained using the ['KornSW-VersioningUtil'](https:
 
 ## Upcoming Changes
 
+*(none)*
+
+
+
+## v 0.8.0
+released **2026-02-23**, including:
  - New Feature: Additional EnclosedTupleExtensions for handling integer and long tuples.
+
 
 
 ## v 0.7.1

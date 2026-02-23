@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.7.1",
-  "currentVersionWithSuffix": "0.7.1",
+  "currentVersion": "0.8.0",
+  "currentVersionWithSuffix": "0.8.0",
   "releaseType": "",
-  "previousVersion": "0.7.0",
-  "changeGrade": "fix",
+  "previousVersion": "0.7.1",
+  "changeGrade": "minor",
   "currentMajor": 0,
-  "currentMinor": 7,
-  "currentPatch": 1,
-  "versionDateInfo": "2026-02-06",
-  "versionTimeInfo": "13:28:15",
-  "versionNotes": "- Bug fix: ForEachEnclosedTupleElement called with null (for counting) threw an axception when tuple contained a null element.\n"
+  "currentMinor": 8,
+  "currentPatch": 0,
+  "versionDateInfo": "2026-02-23",
+  "versionTimeInfo": "06:02:31",
+  "versionNotes": "- New Feature: Additional EnclosedTupleExtensions for handling integer and long tuples.\n"
 }
