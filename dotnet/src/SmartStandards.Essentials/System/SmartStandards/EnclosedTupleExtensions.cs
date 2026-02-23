@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 
 namespace System.SmartStandards {
@@ -206,6 +205,26 @@ namespace System.SmartStandards {
       return extendee;
     }
 
+    /// <summary>
+    ///   Counts the number of elements in a tuple string. 
+    /// </summary>
+    /// <returns>
+    ///   Returns -1 if the tuple is null itself, -2 if the tuple is malformed.
+    /// </returns>
+    public static int CountEnclosedTupleElements(this string extendee, char separator = '#', char escapeChar = '\\') {
+
+      if (extendee is null) return -1;
+
+      // "\0" represents a container being null itself
+      if (extendee.Length == 2 && extendee[0] == escapeChar && extendee[1] == '0') return -1;
+
+      if (string.IsNullOrEmpty(extendee)) return 0; // "" represents an empty container
+
+      int elementCount = 0;
+      elementCount = extendee.ForEachEnclosedTupleElement(null, separator, escapeChar);
+      return elementCount;
+    }
+
     public static String ToEnclosedTuple(
       this IEnumerable extendee,
       Func<object, string> onConvertToString = null,
@@ -259,6 +278,11 @@ namespace System.SmartStandards {
       return enclosedTupleBuilder.ToString();
     }
 
+    /// <summary>
+    ///   Determines whether the given string represents a null tuple itself.
+    /// </summary>
+    /// <param name="extendee"> The string to check, e.g. "\0" </param>
+    /// <returns> True, if the string represents a null tuple; otherwise, false. </returns>
     public static bool TupleReflectsNull(this string extendee, char escapeChar = '\\') {
 
       if (extendee is null) return false;
@@ -278,7 +302,10 @@ namespace System.SmartStandards {
     /// <param name="separator"> An Unicode character that delimits the substrings. </param>
     /// <param name="escapeChar"> An Unicode character that can escape the separator or itself. </param>
     /// <param name="onEachElementMethod">
-    ///   A callback delegate that will be called for each substring. A StringBuilder containing the unescaped substring is passed. 
+    ///   A callback delegate that will be called for each substring. Parameters:
+    ///     int: The 0-based index of the current element.
+    ///     StringBuilder: containing the unescaped substring is passed. 
+    ///     The StringBuilder instance is reused for each element, so it will be cleared before the next element is built up.
     ///   If the the delegate returns true, it will cancel the further iteration of substrings.
     ///   If the delegate is null, the function will nevertheless count the elements and return the count.
     /// </param>
@@ -286,7 +313,12 @@ namespace System.SmartStandards {
     ///   The number of elements.
     ///   If the delegate cancelled the full iteration, the numer of actual iterations is returned.
     /// </returns>
-    public static int ForEachEnclosedTupleElement(this string extendee, Func<int, StringBuilder, bool> onEachElementMethod, char separator = '#', char escapeChar = '\\') {
+    public static int ForEachEnclosedTupleElement(
+      this string extendee,
+      Func<int, StringBuilder, bool> onEachElementMethod,
+      char separator = '#',
+      char escapeChar = '\\'
+    ) {
 
       if (extendee is null) return -1;
 
@@ -306,9 +338,12 @@ namespace System.SmartStandards {
 
       StringBuilder elementBuilder = null;
 
+      // building up tuple elements only makes sense, if a callback is provided.
+      if (onEachElementMethod != null) elementBuilder = new StringBuilder(80);
+
       bool escaping = false;
       bool anotherEscapeExpected = false;
-      bool nulled = false;
+      bool nullDetected = false;
       int cursor;
       char peek;
       int elementIndex = -1;
@@ -326,14 +361,25 @@ namespace System.SmartStandards {
           // But we are forgiving and treat the peek char regularily (value would be "Backslash#AfterHashtagIsMissing")
         }
 
-        if (escaping) { // Escaped char detected...
+        if (escaping) {
 
-          if (peek == '0') {
-            nulled = true;
-            elementBuilder = null;
+          if (peek == '0') { // "\0"
+
+            // we reconstruct the original sequence, because in case of a malformed element (e.g. "#Fo\0o#"),
+            // we gracefully want to return the original value (e.g. "Fo\0o")
+            elementBuilder?.Append(escapeChar).Append('0');
+
+            nullDetected = true;
           } else {
-            if (peek != separator && peek != escapeChar) elementBuilder.Append(escapeChar); // Preserve escape char if non-escapable char followed
+
+            // normally, the escape char was skipped ("C:\\Temp" => "C:\Temp")...
+            // ...but if the char following the escape char is not escapable, we reconstruct the escape char
+            // ("Mal\formed" => "Mal\formed")
+            if (peek != separator && peek != escapeChar) elementBuilder?.Append(escapeChar);
+
             elementBuilder?.Append(peek);
+
+            // Separator must be escaped symmetrically, e.g. "\#\"
             if (peek == separator) anotherEscapeExpected = true;
           }
 
@@ -342,27 +388,32 @@ namespace System.SmartStandards {
         } else if (peek == escapeChar) { // Escape char detected => skip it
           escaping = true;
 
-        } else if (peek == separator) { // Separator char detected => handle current element, start a new one
+        } else if (peek == separator) { // Separator char detected...
 
-          if (onEachElementMethod != null) {
+          // ...handle the previous element...
 
-            if (nulled) {
+          if (elementIndex >= 0 && onEachElementMethod != null) {
+
+            if (nullDetected && elementBuilder.Length == 2) { // only "\0" is a valid null element, not "\0Foo"
               if (onEachElementMethod.Invoke(elementIndex, null)) return elementIndex + 1;
-            } else if (elementBuilder != null) {
+            } else {
               if (onEachElementMethod.Invoke(elementIndex, elementBuilder)) return elementIndex + 1;
             }
 
-            elementBuilder = new StringBuilder(80);
+            elementBuilder.Clear();
           }
 
-          elementIndex += 1;
-          nulled = false;
+          // ...begin fetching the next element:
 
-        } else {
+          elementIndex += 1;
+          nullDetected = false;
+
+        } else { // regular char detected => just append to the current element
           elementBuilder?.Append(peek);
 
-        } // Regular char detected => append to the current element
-      }
+        }
+
+      } // next char
 
       return elementIndex;
     }
@@ -375,7 +426,7 @@ namespace System.SmartStandards {
     /// <param name="separator"> An Unicode character that delimits the substrings. </param>
     /// <param name="escapeChar"> An Unicode character that can escape the separator or itself. </param>
     /// <returns> 
-    ///   Null, if extendee was null.
+    ///   Null, if extendee was null or the tuple was malformed.
     ///   An empty array, if extendee was an empty string. 
     ///   An array whose elements contain the substrings from extendee that are delimited by the separator.
     ///   The substrings are unescaped.
@@ -392,20 +443,90 @@ namespace System.SmartStandards {
 
       if (string.IsNullOrEmpty(extendee)) return Array.Empty<string>();
 
-      List<StringBuilder> elementBuilders = new List<StringBuilder>();
+      int elementCount = extendee.CountEnclosedTupleElements(separator, escapeChar);
 
-      extendee.ForEachEnclosedTupleElement((tokenIndex, elementBuilder) => {
-        elementBuilders.Add(elementBuilder);
-        return false;
-      }, separator, escapeChar);
+      if (elementCount < 0) return null; // Malformed tuple
 
-      int upperBound = elementBuilders.Count - 1;
+      string[] tokens = new string[elementCount];
 
-      string[] tokens = new string[upperBound + 1];
-
-      for (int i = 0, loopTo = upperBound; i <= loopTo; i++) tokens[i] = elementBuilders[i]?.ToString();
+      extendee.ForEachEnclosedTupleElement(
+        (tokenIndex, elementBuilder) => {
+          tokens[tokenIndex] = elementBuilder?.ToString();
+          return false;
+        },
+        separator, escapeChar
+      );
 
       return tokens;
+    }
+
+    /// <summary>
+    ///   Parses a string representing an enclosed tuple of integer values and returns its integer elements as an array.
+    /// </summary>
+    /// <returns>
+    ///   An array of integers parsed from the tuple, or null if the input is null or malformed or the values out of range.
+    /// </returns>
+    public static int[] SplitEnclosedTupleToInt(this string extendee, char separator = '#', char escapeChar = '\\') {
+      if (extendee is null) return null;
+
+      // "\0" represents a container being null itself
+      if (extendee.Length == 2 && extendee[0] == escapeChar && extendee[1] == '0') return null;
+
+      if (string.IsNullOrEmpty(extendee)) return Array.Empty<int>();
+
+      int elementCount = extendee.CountEnclosedTupleElements(separator, escapeChar);
+
+      if (elementCount < 0) return null; // Malformed tuple
+
+      int[] intValues = new int[elementCount];
+
+      extendee.ForEachEnclosedTupleElement(
+        (tokenIndex, elementBuilder) => {
+          if (int.TryParse(elementBuilder.ToString(), out int value)) {
+            intValues[tokenIndex] = value;
+            return false;
+          }
+          intValues = null;
+          return true; // Malformed element that cannot be parsed to int => skip the rest of the tuple
+        },
+        separator, escapeChar
+      );
+
+      return intValues;
+    }
+
+    /// <summary>
+    ///   Parses a string representing an enclosed tuple of integer values and returns its integer elements as an array.
+    /// </summary>
+    /// <returns>
+    ///   An array of long integers parsed from the tuple, or null if the input is null or malformed or the values out of range.
+    /// </returns>
+    public static long[] SplitEnclosedTupleToLong(this string extendee, char separator = '#', char escapeChar = '\\') {
+      if (extendee is null) return null;
+
+      // "\0" represents a container being null itself
+      if (extendee.Length == 2 && extendee[0] == escapeChar && extendee[1] == '0') return null;
+
+      if (string.IsNullOrEmpty(extendee)) return Array.Empty<long>();
+
+      int elementCount = extendee.CountEnclosedTupleElements(separator, escapeChar);
+
+      if (elementCount < 0) return null; // Malformed tuple
+
+      long[] longValues = new long[elementCount];
+      extendee.ForEachEnclosedTupleElement(
+        (tokenIndex, elementBuilder) => {
+          if (long.TryParse(elementBuilder.ToString(), out long value)) {
+            longValues[tokenIndex] = value;
+            return false;
+          }
+          longValues = null;
+          return true; // Malformed element that cannot be parsed to long => skip the rest of the tuple
+        },
+        separator, escapeChar
+      );
+
+      return longValues;
     }
 
   }
