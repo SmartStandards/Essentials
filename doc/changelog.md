@@ -4,8 +4,14 @@ This file is automatically maintained using the ['KornSW-VersioningUtil'](https:
 
 ## Upcoming Changes
 
-* **new Feature**: Moved targets from .net 6/8 to 8/10
-* (**MVP**-state is now reached)
+*(none)*
+
+
+
+## v 1.0.0
+released **2026-05-29**, including:
+ - (**MVP**-state is now reached)
+ - **new Feature**: Moved targets from .net 6/8 to 8/10
 
 
 

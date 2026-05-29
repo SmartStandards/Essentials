@@ -1,13 +1,13 @@
 {
-  "currentVersion": "0.8.0",
-  "currentVersionWithSuffix": "0.8.0",
+  "currentVersion": "1.0.0",
+  "currentVersionWithSuffix": "1.0.0",
   "releaseType": "",
-  "previousVersion": "0.7.1",
+  "previousVersion": "0.8.0",
   "changeGrade": "minor",
-  "currentMajor": 0,
-  "currentMinor": 8,
+  "currentMajor": 1,
+  "currentMinor": 0,
   "currentPatch": 0,
-  "versionDateInfo": "2026-02-23",
-  "versionTimeInfo": "06:02:31",
-  "versionNotes": "- New Feature: Additional EnclosedTupleExtensions for handling integer and long tuples.\n"
+  "versionDateInfo": "2026-05-29",
+  "versionTimeInfo": "05:13:59",
+  "versionNotes": "- (**MVP**-state is now reached)\n- new Feature: Moved targets from .net 6/8 to 8/10\n"
 }
